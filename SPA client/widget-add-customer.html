@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Add customer form</h2>
+    <div class="mb-3">
+        <label for="formGroupExampleInput" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" placeholder="name">
+      </div>
+      <div class="mb-3">
+        <label for="formGroupExampleInput2" class="form-label">FirstName</label>
+        <input type="text" class="form-control" id="firstname" placeholder="firstname">
+      </div>
+      <div class="mb-3">
+        <label for="formGroupExampleInput2" class="form-label">Email</label>
+        <input type="text" class="form-control" id="email" placeholder="email">
+      </div>
+      <div class="mb-3">
+        <label for="formGroupExampleInput2" class="form-label">Street</label>
+        <input type="text" class="form-control" id="street" placeholder="street">
+      </div>
+      <div class="mb-3">
+        <label for="formGroupExampleInput2" class="form-label">City</label>
+        <input type="text" class="form-control" id="city" placeholder="city">
+      </div>
+      <button type="button" class="btn btn-link" id="add">Add</button>
+
+      <script>
+        $("#add").click(
+            function addItem(){
+                name = $("#name").val()
+                fistname = $("#firstname").val()
+                email = $("#email").val()
+                street = $("#street").val()
+                city = $("#city").val()
+                $.ajax({
+                    url: URLbase + "/customer",
+                    contentType: "application/json",
+                    type: "POST",
+                    data: {
+                          id: Math.random() * 100000,
+                          name: name,
+                          firstname: fistname,
+                          email: email,
+                          street: street,
+                          city: city
+                    },
+                    dataType: 'json',
+                    success: function (response) {
+                        $("#main-container").load("./widget-customer.html");
+                    },
+                    error: function (error) {
+                        $("#main-container").load("error.html");
+                    }
+            });
+        })
+      </script>
+</body>
+</html>

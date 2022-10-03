@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<body>
+	<h2>Order service</h2>
+  <br>
+  
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">order id</th>
+        <th scope="col">customer id</th>
+        <th scope="col">count</th>
+        <th scope="col">item</th>
+      </tr>
+    </thead>
+    <tbody id="table-order">
+
+    </tbody>
+  </table>
+
+    <script>
+        var orders;
+        function loadItems() {
+          $.ajax({
+          url: URLbase + "/order",
+          type: "GET",
+          data: {},
+          dataType: 'json',
+          success: function (response) {
+            orders = response;
+            updateItemsTable(orders);
+          },
+          error: function (error) {
+            $("#main-container").load("error.html");
+          }
+          });
+        }
+      
+        function updateItemsTable(orders) {
+          $("#table-order").empty(); // Vaciar la tabla
+          for (i = 0; i < orders.length; i++) {
+            for(j = 0; j < orders[i].orderLine.length ; j++){
+                $("#table-order").append(
+                "<tr id=" + orders[i].id + ">" +
+                "<td>" + i + "</td>" +
+                "<td>" + orders[i].id + "</td>" +
+                "<td>" + orders[i].customerId + "</td>" +
+                "<td>" + orders[i].orderLine[0].count + "</td>" +
+                "<td>" + orders[i].orderLine[0].itemId + "</td>" +
+                "</tr>");
+            }
+          }
+        }
+        loadItems();
+      </script>
+	
+</body>
+</html>
